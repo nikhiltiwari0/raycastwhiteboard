@@ -38,9 +38,6 @@ class Whiteboard:
         self.canvas.bind("<B1-Motion>", self.paint)
         self.canvas.bind("<ButtonRelease-1>", self.reset)
         self.canvas.bind("<MouseWheel>", self.change_line_width)
-        self.master.bind("<Control-z>", lambda event: self.canvas.edit_undo())
-        self.master.bind("<Control-y>", lambda event: self.canvas.edit_redo())
-
     def paint(self, event):
         x, y = event.x, event.y
         if self.old_x and self.old_y:
@@ -51,11 +48,9 @@ class Whiteboard:
 
     def reset(self, event):
         self.old_x, self.old_y = None, None
-        self.canvas.edit_undo()
 
     def change_color(self, new_color):
         self.color = new_color
-        self.canvas.edit_undo()
 
     def change_line_width(self, event):
         if event.delta > 0:
@@ -70,8 +65,6 @@ class Whiteboard:
 
     def clear_canvas(self):
         self.canvas.delete("all")
-        self.canvas.edit_undo()
-
 
 if __name__ == "__main__":
     root = tk.Tk()
